@@ -1,4 +1,4 @@
-const { Pool, Client } = require('pg')
+const { Pool } = require('pg');
 
 const pool = new Pool({
   user: 'postgres',
@@ -6,9 +6,10 @@ const pool = new Pool({
   database: 'ticTacToe',
   password: 'postgres',
   port: 5432,
-})
+});
 
 pool.query('SELECT NOW()', (err, res) => {
-  console.log(err, res)
-  pool.end()
-})
+  // eslint-disable-next-line no-console
+  console.log(err, res);
+  pool.end();
+});
