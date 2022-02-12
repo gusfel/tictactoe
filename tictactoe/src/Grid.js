@@ -1,4 +1,6 @@
 import React, { useState, useEffect } from 'react';
+import PropTypes from 'prop-types';
+import Box from './Box';
 
 const Grid = ({ changePlayer, player, setWinner }) => {
   const [tL, setTL] = useState('');
@@ -44,7 +46,6 @@ const Grid = ({ changePlayer, player, setWinner }) => {
     ) {
       setWinner(player);
     }
-    return false;
   };
 
   useEffect(() => {
@@ -60,40 +61,28 @@ const Grid = ({ changePlayer, player, setWinner }) => {
   return (
     <div id="grid">
       <div className="row">
-        <div className="box" role="button" id="TL" onClick={(e) => takeTurn(e)}>
-          {tL}
-        </div>
-        <div className="box" role="button" id="TM" onClick={(e) => takeTurn(e)}>
-          {tM}
-        </div>
-        <div className="box" role="button" id="TR" onClick={(e) => takeTurn(e)}>
-          {tR}
-        </div>
+        <Box takeTurn={takeTurn} changePlayer={changePlayer} currId="TL" value={tL} />
+        <Box takeTurn={takeTurn} changePlayer={changePlayer} currId="TM" value={tM} />
+        <Box takeTurn={takeTurn} changePlayer={changePlayer} currId="TR" value={tR} />
       </div>
       <div className="row">
-        <div className="box" role="button" id="ML" onClick={(e) => takeTurn(e)}>
-          {mL}
-        </div>
-        <div className="box" role="button" id="MM" onClick={(e) => takeTurn(e)}>
-          {mM}
-        </div>
-        <div className="box" role="button" id="MR" onClick={(e) => takeTurn(e)}>
-          {mR}
-        </div>
+        <Box takeTurn={takeTurn} changePlayer={changePlayer} currId="ML" value={mL} />
+        <Box takeTurn={takeTurn} changePlayer={changePlayer} currId="MM" value={mM} />
+        <Box takeTurn={takeTurn} changePlayer={changePlayer} currId="MR" value={mR} />
       </div>
       <div className="row">
-        <div className="box" role="button" id="BL" onClick={(e) => takeTurn(e)}>
-          {bL}
-        </div>
-        <div className="box" role="button" id="BM" onClick={(e) => takeTurn(e)}>
-          {bM}
-        </div>
-        <div className="box" role="button" id="BR" onClick={(e) => takeTurn(e)}>
-          {bR}
-        </div>
+        <Box takeTurn={takeTurn} changePlayer={changePlayer} currId="BL" value={bL} />
+        <Box takeTurn={takeTurn} changePlayer={changePlayer} currId="BM" value={bM} />
+        <Box takeTurn={takeTurn} changePlayer={changePlayer} currId="BR" value={bR} />
       </div>
     </div>
   );
 };
 
 export default Grid;
+
+Grid.propTypes = {
+  player: PropTypes.string.isRequired,
+  changePlayer: PropTypes.func.isRequired,
+  setWinner: PropTypes.func.isRequired,
+};
