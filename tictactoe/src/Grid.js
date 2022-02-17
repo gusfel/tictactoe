@@ -2,7 +2,9 @@ import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import Box from './Box';
 
-const Grid = ({ changePlayer, player, setWinner }) => {
+const Grid = ({
+  changePlayer, player, setWinner, newGame, setNewGame,
+}) => {
   const [tL, setTL] = useState('');
   const [tM, setTM] = useState('');
   const [tR, setTR] = useState('');
@@ -12,6 +14,7 @@ const Grid = ({ changePlayer, player, setWinner }) => {
   const [bL, setBL] = useState('');
   const [bM, setBM] = useState('');
   const [bR, setBR] = useState('');
+  const [start, setStart] = useState(false);
 
   const obj = {
     TL: setTL,
@@ -47,10 +50,25 @@ const Grid = ({ changePlayer, player, setWinner }) => {
       setWinner(player);
     }
   };
+  useEffect(() => {
+    setTL('');
+    setTM('');
+    setTR('');
+    setML('');
+    setMM('');
+    setMR('');
+    setBL('');
+    setBM('');
+    setBR('');
+    setNewGame(false);
+  }, [newGame]);
 
   useEffect(() => {
     checkForWinner();
-    changePlayer();
+    if (start) {
+      changePlayer();
+    }
+    setStart(true);
   }, [tL, tM, tR, mL, mM, mR, bL, bM, bR]);
 
   const takeTurn = async (e) => {
@@ -85,4 +103,6 @@ Grid.propTypes = {
   player: PropTypes.string.isRequired,
   changePlayer: PropTypes.func.isRequired,
   setWinner: PropTypes.func.isRequired,
+  newGame: PropTypes.bool.isRequired,
+  setNewGame: PropTypes.func.isRequired,
 };
