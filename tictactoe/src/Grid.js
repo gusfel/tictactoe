@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import Box from './Box';
 
 const Grid = ({
-  changePlayer, player, setWinner, newGame, setNewGame,
+  changePlayer, player, setWinner, newGame, setNewGame, winner, addToCount,
 }) => {
   const [tL, setTL] = useState('');
   const [tM, setTM] = useState('');
@@ -47,6 +47,7 @@ const Grid = ({
       || middleC
       || right
     ) {
+      addToCount(player);
       setWinner(player);
     }
   };
@@ -72,8 +73,10 @@ const Grid = ({
   }, [tL, tM, tR, mL, mM, mR, bL, bM, bR]);
 
   const takeTurn = async (e) => {
-    const square = e.target.id;
-    obj[square](player);
+    if (!winner) {
+      const square = e.target.id;
+      obj[square](player);
+    }
   };
 
   return (
@@ -104,5 +107,7 @@ Grid.propTypes = {
   changePlayer: PropTypes.func.isRequired,
   setWinner: PropTypes.func.isRequired,
   newGame: PropTypes.bool.isRequired,
+  winner: PropTypes.bool.isRequired,
   setNewGame: PropTypes.func.isRequired,
+  addToCount: PropTypes.func.isRequired,
 };

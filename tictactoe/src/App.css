@@ -58,3 +58,9 @@
 #grid {
   display: block;
 }
+
+#winCounts {
+  display: flex;
+  justify-content: space-evenly;;
+  width: 160px;
+}
