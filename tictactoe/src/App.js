@@ -1,4 +1,5 @@
 import './App.css';
+import axios from 'axios';
 import React, { useState } from 'react';
 import Grid from './Grid';
 import Reset from './Reset';
@@ -11,6 +12,7 @@ const App = () => {
   const [oCount, setOCount] = useState(0);
 
   const changePlayer = () => {
+    axios.get('http://localhost:3010');
     if (player === 'X') {
       setPlayer('O');
     } else {
