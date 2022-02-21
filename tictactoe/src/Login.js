@@ -7,7 +7,7 @@ const Login = ({ loadingPageFunc }) => {
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    loadingPageFunc(game);
+    loadingPageFunc(Number(game));
   };
 
   return (

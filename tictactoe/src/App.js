@@ -1,5 +1,6 @@
 import './App.css';
 import React, { useState } from 'react';
+import axios from 'axios';
 import Grid from './Grid';
 import Reset from './Reset';
 import Login from './Login';
@@ -11,7 +12,8 @@ const App = () => {
   const [xCount, setXCount] = useState(0);
   const [oCount, setOCount] = useState(0);
   const [loading, setLoading] = useState(true);
-  const [gameNum, setGameNum] = useState(null);
+  const [gameId, setGameId] = useState(null);
+  const [gameData, setGameData] = useState([]);
 
   const changePlayer = () => {
     if (player === 'X') {
@@ -32,9 +34,16 @@ const App = () => {
   const loadingPageFunc = (val) => {
     setLoading(false);
     if (val === 'new') {
-
+      axios.get('http://localhost:3010/newGame')
+        .then((res) => {
+          setGameId(res.data.gameId);
+        });
     } else {
-
+      setGameId(val);
+      axios.get(`http://localhost:3010/oldGame?gameId=${val}`)
+        .then((res) => {
+          setGameData([...gameData, ...res.data.gameData]);
+        });
     }
   };
 
@@ -52,6 +61,8 @@ const App = () => {
               setNewGame={setNewGame}
               winner={winner}
               addToCount={addToCount}
+              gameData={gameData}
+              gameId={gameId}
             />
             <div id="winCounts">
               <span>

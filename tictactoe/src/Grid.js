@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import Box from './Box';
 
 const Grid = ({
-  changePlayer, player, setWinner, newGame, setNewGame, winner, addToCount,
+  changePlayer, player, setWinner, newGame, setNewGame, winner, addToCount, gameId, gameData,
 }) => {
   const [tL, setTL] = useState('');
   const [tM, setTM] = useState('');
@@ -73,11 +73,19 @@ const Grid = ({
     setStart(true);
   }, [tL, tM, tR, mL, mM, mR, bL, bM, bR]);
 
+  useEffect(() => {
+    if (gameData) {
+      gameData.forEach((squareData) => {
+        obj[squareData[0]](squareData[1]);
+      });
+    }
+  }, [gameData]);
+
   const takeTurn = async (e) => {
     if (!winner) {
       const square = e.target.id;
       obj[square](player);
-      axios.post('http://localhost:3010', { currPlayer: player, square });
+      axios.post('http://localhost:3010/updateGame', { currPlayer: player, square, gameId });
     }
   };
 
@@ -112,4 +120,12 @@ Grid.propTypes = {
   winner: PropTypes.string.isRequired,
   setNewGame: PropTypes.func.isRequired,
   addToCount: PropTypes.func.isRequired,
+  gameId: PropTypes.number.isRequired,
+  gameData: PropTypes.arrayOf(
+    PropTypes.arrayOf(PropTypes.string),
+  ),
+};
+
+Grid.defaultProps = {
+  gameData: [],
 };

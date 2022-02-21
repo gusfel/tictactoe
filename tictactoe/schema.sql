@@ -5,11 +5,11 @@ CREATE DATABASE tictactoe;
 \c tictactoe;
 
 CREATE TABLE games (
-  id serial PRIMARY KEY,
+  id SERIAL PRIMARY KEY,
   winner VARCHAR(1)
 );
 
-CREATE TABLE gameRecords (
+CREATE TABLE game_records (
   id serial PRIMARY KEY,
   game_id INT NOT NULL,
   TL VARCHAR(1),
@@ -21,7 +21,6 @@ CREATE TABLE gameRecords (
   BL VARCHAR(1),
   BM VARCHAR(1),
   BR VARCHAR(1),
-  added DATE NOT NULL,
   FOREIGN KEY (game_id)
     REFERENCES games (id)
 );
