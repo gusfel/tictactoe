@@ -1,8 +1,8 @@
 import './App.css';
-import axios from 'axios';
 import React, { useState } from 'react';
 import Grid from './Grid';
 import Reset from './Reset';
+import Login from './Login';
 
 const App = () => {
   const [player, setPlayer] = useState('X');
@@ -10,9 +10,10 @@ const App = () => {
   const [newGame, setNewGame] = useState(false);
   const [xCount, setXCount] = useState(0);
   const [oCount, setOCount] = useState(0);
+  const [loading, setLoading] = useState(true);
+  const [gameNum, setGameNum] = useState(null);
 
   const changePlayer = () => {
-    axios.get('http://localhost:3010');
     if (player === 'X') {
       setPlayer('O');
     } else {
@@ -28,39 +29,54 @@ const App = () => {
     }
   };
 
+  const loadingPageFunc = (val) => {
+    setLoading(false);
+    if (val === 'new') {
+
+    } else {
+
+    }
+  };
+
   return (
     <div className="App">
-      <Grid
-        changePlayer={changePlayer}
-        player={player}
-        setWinner={setWinner}
-        newGame={newGame}
-        setNewGame={setNewGame}
-        winner={winner}
-        addToCount={addToCount}
-      />
-      <div id="winCounts">
-        <spam>
-          X wins:
-          {' '}
-          {xCount}
-        </spam>
-        <spam>
-          0 wins:
-          {' '}
-          {oCount}
-        </spam>
-      </div>
-      {winner && (
-        <div>
-          <p>
-            The winner is
-            {' '}
-            {winner}
-          </p>
-          <Reset setWinner={setWinner} setNewGame={setNewGame} />
-        </div>
-      )}
+      {loading
+        ? <Login loadingPageFunc={loadingPageFunc} />
+        : (
+          <div id="loggedIn">
+            <Grid
+              changePlayer={changePlayer}
+              player={player}
+              setWinner={setWinner}
+              newGame={newGame}
+              setNewGame={setNewGame}
+              winner={winner}
+              addToCount={addToCount}
+            />
+            <div id="winCounts">
+              <span>
+                X wins:
+                {' '}
+                {xCount}
+              </span>
+              <span>
+                0 wins:
+                {' '}
+                {oCount}
+              </span>
+            </div>
+            {winner && (
+            <div>
+              <p>
+                The winner is
+                {' '}
+                {winner}
+              </p>
+              <Reset setWinner={setWinner} setNewGame={setNewGame} />
+            </div>
+            )}
+          </div>
+        )}
     </div>
   );
 };

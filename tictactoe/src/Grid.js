@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import axios from 'axios';
 import PropTypes from 'prop-types';
 import Box from './Box';
 
@@ -76,6 +77,7 @@ const Grid = ({
     if (!winner) {
       const square = e.target.id;
       obj[square](player);
+      axios.post('http://localhost:3010', { currPlayer: player, square });
     }
   };
 
@@ -107,7 +109,7 @@ Grid.propTypes = {
   changePlayer: PropTypes.func.isRequired,
   setWinner: PropTypes.func.isRequired,
   newGame: PropTypes.bool.isRequired,
-  winner: PropTypes.bool.isRequired,
+  winner: PropTypes.string.isRequired,
   setNewGame: PropTypes.func.isRequired,
   addToCount: PropTypes.func.isRequired,
 };
